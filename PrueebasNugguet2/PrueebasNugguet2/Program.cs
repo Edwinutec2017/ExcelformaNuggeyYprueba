@@ -136,14 +136,11 @@ namespace PrueebasNugguet2
 
             Console.WriteLine("Hello World!");
             IExcel excel = new Excel();
-              //excel.Encabezado(encabezado);
-             //excel.PiePagina(pie);
-            //excel.CodigoDescrip(cod);
-           // excel.NombreLogo("Afpcrecer.PNG");
             excel.GuardarArchivo(null, "pruebaImagen5");
          
             excel.NewContent(lista);
               Console.WriteLine(excel.Ubicacion());
+            Console.ReadLine();
              //lista.Clear();
             excel.Delete();
         }

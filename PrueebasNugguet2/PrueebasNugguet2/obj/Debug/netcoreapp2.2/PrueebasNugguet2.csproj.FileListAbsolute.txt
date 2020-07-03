@@ -10,3 +10,15 @@ C:\Users\bscenolasc\source\repos\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\net
 C:\Users\bscenolasc\source\repos\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.AssemblyInfo.cs
 C:\Users\bscenolasc\source\repos\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.dll
 C:\Users\bscenolasc\source\repos\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.pdb
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\bin\Debug\netcoreapp2.2\Img\Afpcrecer.PNG
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\bin\Debug\netcoreapp2.2\PrueebasNugguet2.deps.json
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\bin\Debug\netcoreapp2.2\PrueebasNugguet2.runtimeconfig.json
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\bin\Debug\netcoreapp2.2\PrueebasNugguet2.runtimeconfig.dev.json
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\bin\Debug\netcoreapp2.2\PrueebasNugguet2.dll
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\bin\Debug\netcoreapp2.2\PrueebasNugguet2.pdb
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.csprojAssemblyReference.cache
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.csproj.CoreCompileInputs.cache
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.AssemblyInfoInputs.cache
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.AssemblyInfo.cs
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.dll
+E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.pdb

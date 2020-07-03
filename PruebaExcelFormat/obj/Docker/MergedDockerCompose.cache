@@ -1,0 +1,7 @@
+services:
+  pruebaexcelformat:
+    build:
+      context: C:\Users\bscenolasc\source\repos\PruebaExcelFormat
+      dockerfile: PruebaExcelFormat/Dockerfile
+    image: pruebaexcelformat
+version: '3.4'

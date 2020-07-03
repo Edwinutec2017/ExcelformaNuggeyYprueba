@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  pruebaexcelformat:
+    image: ${DOCKER_REGISTRY-}pruebaexcelformat
+    build:
+      context: .
+      dockerfile: PruebaExcelFormat/Dockerfile

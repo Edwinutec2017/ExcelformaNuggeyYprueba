@@ -1,0 +1,11 @@
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.deps.json
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.runtimeconfig.json
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.runtimeconfig.dev.json
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.dll
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.pdb
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.csprojAssemblyReference.cache
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.csproj.CoreCompileInputs.cache
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.AssemblyInfoInputs.cache
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.AssemblyInfo.cs
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.dll
+C:\Users\bscenolasc\source\repos\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.pdb
