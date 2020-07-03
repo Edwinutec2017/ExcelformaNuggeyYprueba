@@ -1,5 +1,6 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using PrueebasNugguet2.Dto;
 using PrueebasNugguet2.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,11 +17,20 @@ namespace PrueebasNugguet2
         #region CONSTRUCTOR
         public Excel()
         {
-            this.celdaInicio = 'A';
-            this.positionInicion = 2;
+                celdaInicio = 'A';
+                positionInicion = 2;
+        }
+        public Excel(string proceso)
+        {
+            if (proceso.Equals("convdeuda")) {
+                celdaInicio = 'A';
+                positionInicion = 1;
+            }
+
         }
         #endregion
         #region Atributos
+        private ExtraerConten extra = new ExtraerConten();
         private char celdaInicio, celdaFinal;
         private int positionInicion;
         private PropertyInfo[] properties = null;
@@ -62,63 +72,19 @@ namespace PrueebasNugguet2
             var ruta = $@"../../../Img/{nombreImagen}";
             this.RutaImagen = ruta ;
         }
-        private int CantidadMostrar(PropertyInfo[] properties)
-        {
-            try
-            {
-                var cantidad = properties.Select(property => ConvertObject(property).Length > 0
-                ? !((DescripcionExcel)ConvertObject(property).FirstOrDefault()).Ignore : true)
-                .Where(z => z).Count();
-                return cantidad;
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine($"Error en la cantidad a mostrar {ex}");
-                throw ex;
-            }
-        }
-        private object[] ConvertObject(PropertyInfo property)
-        {
-            return property.GetCustomAttributes(typeof(DescripcionExcel), true);
-        }
-        private int GetHeader(object obj)
-        {
-            try
-            {
-                properties = obj.GetType().GetProperties();
-                string[] header = new string[CantidadMostrar(properties)];
-                var indice = 0;
-                foreach (PropertyInfo property in properties)
-                {
-                    attributes = property.GetCustomAttributes(typeof(DescripcionExcel), true);
-                    DescripcionExcel myAttribute = (DescripcionExcel)attributes[0];
-                    if (!myAttribute.Ignore)
-                    {
-                        header[indice] = (!string.IsNullOrEmpty(myAttribute.Name)) ? myAttribute.Name : property.Name.ToUpper();
-                    }
-                    else
-                    {
-                        indice--;
-                    }
-                    indice++;
-                }
-                headerRow.Add(header);
-                Dispos(true);
-                return header.Length;
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine($"Error en el GeHeader {ex}");
-                throw ex;
-            }
-        }
+   
+     
+
+   
+
         public Task<bool> NewContent<T>(IList<T> datos)
         {
             try
             {
                 if (datos.Count > 0)
                 {
-                    var cantidad = GetHeader(datos.FirstOrDefault());
+                    var cantidad = extra.GetHeader(datos.FirstOrDefault());
+                    headerRow = extra.Data();
                     dataconte = null;
                     foreach (object obj in datos)
                     {
@@ -471,8 +437,10 @@ namespace PrueebasNugguet2
                 }
             }
             else {
-                Texto("A1", $"FECHA : {DateTime.Now.ToString("dd-MM-yyyy")}");
-                ColorTexto($"A1", Color.WhiteSmoke, Color.Black, 12);
+                if (celdaInicio.Equals('A') && positionInicion.Equals(2)) {
+                    Texto("A1", $"FECHA : {DateTime.Now.ToString("dd-MM-yyyy")}");
+                    ColorTexto($"A1", Color.WhiteSmoke, Color.Black, 12);
+                }
             }
             Dispos(true);
         }

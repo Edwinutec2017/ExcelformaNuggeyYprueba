@@ -11,7 +11,7 @@ namespace PrueebasNugguet2
             IList<Prueba> lista =
             new List<Prueba>();
             Prueba pp;
-            for (int a = 1; a <= 15; a++)
+            for (int a = 1; a <= 1; a++)
             {
                 pp = new Prueba()
                 {
@@ -135,7 +135,7 @@ namespace PrueebasNugguet2
             };
 
             Console.WriteLine("Hello World!");
-            IExcel excel = new Excel();
+            IExcel excel = new Excel("convdeuda");
             excel.GuardarArchivo(null, "pruebaImagen5");
          
             excel.NewContent(lista);
