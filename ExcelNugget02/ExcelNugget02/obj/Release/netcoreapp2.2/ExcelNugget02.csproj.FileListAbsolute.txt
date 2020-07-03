@@ -1,0 +1,11 @@
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\Dtos\Content.cs
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\Interfaces\IExcel.cs
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\ExcelNugget02.deps.json
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\ExcelNugget02.dll
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\ExcelNugget02.pdb
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.csproj.CoreCompileInputs.cache
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.AssemblyInfoInputs.cache
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.AssemblyInfo.cs
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.dll
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.pdb
+C:\Users\bscenolasc\source\repos\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.csprojAssemblyReference.cache

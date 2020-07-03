@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <AssemblyVersion>1.1.0.16</AssemblyVersion>
+    <FileVersion>1.1.0.16</FileVersion>
+    <Version>1.1.18</Version>
+    <Authors>Edwin</Authors>
+    <PackageId>ExcelFormat</PackageId>
+    <Description></Description>
+    <PackageProjectUrl></PackageProjectUrl>
+    <Product>ExcelNugget02</Product>
+    <Company>Edwin</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EPPlus.Core" Version="1.5.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Dtos\Content.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Update="Interfaces\IExcel.cs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+</Project>
