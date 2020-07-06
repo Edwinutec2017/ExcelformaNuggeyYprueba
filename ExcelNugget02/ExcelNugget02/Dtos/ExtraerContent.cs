@@ -7,9 +7,9 @@ using System.Reflection;
 using System.Runtime;
 using System.Text;
 
-namespace PrueebasNugguet2.Dto
+namespace ExcelNugget02.Dtos
 {
-   public  class ExtraerConten:IDisposable
+   public class ExtraerContent
     {
         #region ATRIBUTOS
         private PropertyInfo[] properties = null;
@@ -46,7 +46,8 @@ namespace PrueebasNugguet2.Dto
             return property.GetCustomAttributes(typeof(DescripcionExcel), true);
         }
 
-        public List<string[]> Data() {
+        public List<string[]> Data()
+        {
             return headerRow;
         }
         public int GetHeader(object obj)
@@ -82,5 +83,6 @@ namespace PrueebasNugguet2.Dto
             }
         }
         #endregion
+
     }
 }
