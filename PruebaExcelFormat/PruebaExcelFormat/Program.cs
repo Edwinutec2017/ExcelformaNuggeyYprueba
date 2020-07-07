@@ -14,16 +14,16 @@ namespace PruebaExcelFormat
 
             List<Prueba> lista =  new List<Prueba>();
             Prueba pp;
-            for (int a = 1; a <= 3; a++)
+            for (int a = 1; a <= 5; a++)
             {
                 pp = new Prueba()
                 {
                     Name = $"a00000000000000: {a}",
-                    Edad = 25123232,
-                    Apellido = "123",
-                    Anio = 201912323,
-                    Fecha = 20191223,
-                    Hora = 1451
+                    Edad = "980150159200",
+                    Apellido = "1231111111111111",
+                    Anio = "02071106470015",
+                    Fecha = "KALIL FUERTES CARLOS ANTONIO",
+                    Hora = "JAVIER EDUARDO AZUCAR CARRILLO"
                 };
                 lista.Add(pp);
             }
@@ -138,17 +138,18 @@ namespace PruebaExcelFormat
         //    };
 
             Console.WriteLine("Hello World!");
-            IExcel excel = new Excel();
+            IExcel excel = new Excel("convdeuda");
             //  excel.Encabezado(encabezado);
             //  excel.PiePagina(pie);
              //// excel.CodigoDescrip(cod);
 
            // excel.NombreLogo("Afpcrecer.PNG");
             Console.WriteLine(lista.Count);
-            excel.GuardarArchivo(null, "Prueba");
+            excel.GuardarArchivo(null, "Prueba excel 5");
             excel.NewContent(lista);
 
             Console.WriteLine(excel.Ubicacion());
+            Console.ReadLine();
             //lista.Clear();
             //excel.Delete();
 
