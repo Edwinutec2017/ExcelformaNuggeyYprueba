@@ -17,23 +17,29 @@ namespace ExcelNugget02
 {
     public class Excel : IExcel, IDisposable
     {
-        #region CONSTRUCTOR
+        #region constructor
         public Excel()
         {
-            this.celdaInicio = 'A';
-            this.positionInicion = 2;
+            celdaInicio = 'A';
+            positionInicion = 2;
         }
+        #region PROCESO GENERAR DEUDA
         public Excel(string proceso)
         {
             if (proceso.Equals("convdeuda"))
             {
+                _proceso = proceso;
                 celdaInicio = 'A';
                 positionInicion = 1;
             }
 
         }
         #endregion
+        #endregion
+
         #region Atributos
+        private readonly string _proceso = null;
+        private ExtraerContent extra = new ExtraerContent();
         private char celdaInicio, celdaFinal;
         private int positionInicion;
         private PropertyInfo[] properties = null;
@@ -44,137 +50,37 @@ namespace ExcelNugget02
         private string[] dataconte = null;
         private ExcelWorksheet worksheet;
         private ExcelPackage excel = new ExcelPackage();
-        private bool resp;
         private string nombre_archivo = "";
         private string UbicacionDoc;
-        private List<Content> encabezados;
-        private List<Content> piePagina;
-        private List<Content> Cod;
-        private string RutaImagen;
-        private ExtraerContent _extraerContent = new ExtraerContent();
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
-        #region METODOS
-        #region PIE,ENCABEZADO,LOGO
-        public void Encabezado(List<Content> encabezadoExcel)
-        {
 
-            if (encabezadoExcel != null)
-            {
-                if (encabezadoExcel.Count <= 3)
-                    positionInicion = positionInicion + 2;
-                else if (encabezadoExcel.Count > 4)
-                    positionInicion = positionInicion + 10;
-            }
-            this.encabezados = encabezadoExcel;
-            Dispos(true);
-        }
-        public void PiePagina(List<Content> PieExcel)
+        #region CELDA FINAL Y ENCABEZADO
+        private void GenerarCeldaFinal()
         {
-            this.piePagina = PieExcel;
-        }
-        public void NombreLogo(string nombreImagen)
-        {
-            var ruta = $@"../../../Img/{nombreImagen}";
-            this.RutaImagen = ruta;
-        }
-        private void Imagen()
-        {
-            if (RutaImagen != null)
-            {
-                using (Image image = Image.FromFile(RutaImagen))
-                {
-                    var excelImage = worksheet.Drawings.AddPicture("Logo", image);
-                    excelImage.SetPosition(1, 0, 0, 0);
-                }
-            }
-            Dispos(true);
-        }
-        private void PiePagina(int finalConte)
-        {
-            positionInicion = positionInicion + 7;
-            CodigosDescripcion(positionInicion);
-            if (piePagina != null)
-            {
-                if (piePagina.Count > 0)
-                {
-                    foreach (var obj in piePagina)
-                    {
-                        if (obj.Conten.Length == 13)
-                        {
-                            Texto($"{obj.Celda}{positionInicion}", obj.Conten);
-                            Combinacion($"{obj.Celda}{positionInicion}:{celdaFinal}{positionInicion}");
-                            Border(1, $"{obj.Celda}{positionInicion}:{celdaFinal}{positionInicion}");
-                            positionInicion = positionInicion + 3;
-                        }
-                        else if (obj.Conten.Length > 20)
-                        {
-
-                            Texto($"{obj.Celda}{positionInicion}", obj.Conten);
-                            int aumento = positionInicion;
-                            aumento = aumento + 3; ;
-                            Combinacion($"{obj.Celda}{positionInicion}:{celdaFinal}{aumento}");
-                            ColorCelda($"{obj.Celda}{positionInicion}:{celdaFinal}{aumento}", Color.WhiteSmoke);
-                            Border(1, $"{obj.Celda}{positionInicion}:{celdaFinal}{positionInicion}");
-                            positionInicion = positionInicion + 4;
-                        }
-                        else
-                        {
-                            Texto($"{obj.Celda}{positionInicion}", obj.Conten);
-                            Border(1, $"{obj.Celda}{positionInicion}:{celdaFinal}{positionInicion}");
-                        }
-                    }
-                }
-            }
-            Dispos(true);
+            celdaFinal = (char)(celdaInicio + data[0].Length - 1);
         }
         private void Encabezado()
         {
-            if (encabezados != null)
+            if (celdaInicio.Equals('A') && positionInicion.Equals(2))
             {
-                Imagen();
-                if (encabezados.Count > 0)
-                {
-                    foreach (var obj in encabezados)
-                    {
-                        if (obj.Conten.Length > 20)
-                        {
-                            var cantidad = obj.Conten.Length / 15;
-                            var celdaInicio = obj.Celda;
-                            string combinacionceldas = $"{obj.Celda}{obj.PositionCelda}:";
-                            obj.Celda += (char)(cantidad - 1);
-                            combinacionceldas = $"{combinacionceldas}{obj.Celda}{obj.PositionCelda}";
-                            Texto($"{celdaInicio}{obj.PositionCelda}", obj.Conten);
-                            Combinacion(combinacionceldas);
-                        }
-                        else
-                        {
-                            Texto($"{obj.Celda}{obj.PositionCelda}", obj.Conten);
+                Texto("A1", $"FECHA : {DateTime.Now.ToString("dd-MM-yyyy")}");
+                ColorTexto($"A1", Color.WhiteSmoke, Color.Black, 12);
+            }
 
-                        }
-                    }
-                }
-            }
-            else
-            {
-                if (celdaInicio.Equals('A') && positionInicion.Equals(2))
-                {
-                    Texto("A1", $"FECHA : {DateTime.Now.ToString("dd-MM-yyyy")}");
-                    ColorTexto($"A1", Color.WhiteSmoke, Color.Black, 12);
-                }
-            }
             Dispos(true);
         }
         #endregion
+
         #region CONTENIDO
-        public Task<bool> NewContent<T>(List<T> datos)
+        public Task<bool> NewContent<T>(List<T> datos, string hoja)
         {
             try
             {
                 if (datos.Count > 0)
                 {
-                    var cantidad = _extraerContent.GetHeader(datos.FirstOrDefault());
-                    headerRow = _extraerContent.Data();
+                    var cantidad = extra.GetHeader(datos.FirstOrDefault());
+                    headerRow = extra.Data();
                     dataconte = null;
                     foreach (object obj in datos)
                     {
@@ -203,14 +109,16 @@ namespace ExcelNugget02
                         }
                         data.Add(dataconte);
                     }
-                    Main();
+                    Header(hoja);
+                    Content();
+                    Limpiar();
                 }
                 Dispos(true);
                 return Task.FromResult(true);
             }
             catch (IOException ex)
             {
-                _log.Error($"Error al cargar Data. {ex.StackTrace}"); 
+               _log.Error($"Error en el contenido {ex.StackTrace}");
                 throw ex;
             }
         }
@@ -219,67 +127,52 @@ namespace ExcelNugget02
             try
             {
                 string range = Convertir32(data);
-                CargarData(range, data);
-                TextoAjuste(1, range);
+                worksheet.Cells[range].LoadFromArrays(data);
                 GenerarCeldaFinal();
-                PiePagina(GenerarBorder());
+                GenerarBorder();
+                positionInicion--;
                 Dispos(true);
                 return true;
             }
             catch (IOException ex)
             {
-                throw ex;
+              _log.Warn($"Error al guardar el contenido del excel {ex.StackTrace}");
+              throw ex;
             }
         }
-        #endregion
-        #region LIMPIAR
-        private void Limpiar()
-        {
-            using (MemoryStream me = new MemoryStream())
-            {
-                headerRow.Clear();
-                data.Clear();
-                worksheet = null;
-                dataconte = null;
-                attributes = null;
-                properties = null;
-                encabezados = null;
-                piePagina = null;
-                me.Dispose();
-            }
-            Dispos(true);
-        }
-        #endregion
-        #region LLAMADA METODOS 
-        private bool Main()
+        private bool Header(string nombrehoja)
         {
             try
             {
-                if (Header() && Content() && Save())
-                {
-                    Limpiar();
-                    resp = true;
-                }
-                else
-                {
-                    resp = false;
-                }
-                _log.InfoFormat("Archivo creado con exito");
-                return resp;
+                excel.Workbook.Worksheets.Add(nombrehoja);
+                string range = Convertir32(headerRow);
+                worksheet = excel.Workbook.Worksheets[nombrehoja];
+                Filtro(range);
+                Encabezado();
+                CargarData(range, headerRow);
+                AlineacionTexto(range, ExcelVerticalAlignment.Bottom, ExcelHorizontalAlignment.Left);
+                ColorTexto(range, Color.WhiteSmoke, Color.Black, 12);
+                TextoAjuste(1, range);
+                positionInicion++;
+                Dispos(true);
+                _log.Info($"Creacion con exito de los Headers de las columnas. {nombrehoja}");
+                return true;
             }
             catch (IOException ex)
             {
-                _log.Warn($"Error al crear el excel {ex.StackTrace}");
+                _log.Error($"Error al crear encabezados de columnas {ex.StackTrace}");
                 throw ex;
             }
         }
         #endregion
-        #region GUARDAR ARCHIVO
-        public void GuardarArchivo(string ubicacion, string nombre_archivo)
+
+        #region RUTA ARCHIVO
+        public void ArchivoRuta(string ubicacion, string nombre_archivo)
         {
             try
             {
                 this.nombre_archivo = nombre_archivo;
+                Console.WriteLine($"Nombre {nombre_archivo}");
                 if (string.IsNullOrEmpty(ubicacion))
                     this.UbicacionDoc = Directory.GetCurrentDirectory();
                 else
@@ -287,116 +180,33 @@ namespace ExcelNugget02
             }
             catch (IOException ex)
             {
-                _log.Warn($"Error en la ruta del archivo {ex.StackTrace}");
+                _log.Error($"Error al crear el directorio {ex.StackTrace}");
                 throw ex;
             }
             Dispos(true);
         }
-        private bool Save()
+        public string Guardar()
         {
+            string RutaUbicacion = null;
             try
             {
-                var execel = $@"{UbicacionDoc}/Excel/{nombre_archivo} {DateTime.Now.ToString("dd-MM-yyyy")}.xlsx";
+                var execel = $@"{UbicacionDoc}/Excel/{nombre_archivo}.xlsx";
                 FileInfo excelFile = new FileInfo(execel);
                 excelFile.Directory.Create();
                 UbicacionDoc = excelFile.ToString();
                 excel.SaveAs(excelFile);
                 Dispos(true);
-                return true;
+                RutaUbicacion = UbicacionDoc;
+                _log.Info("Exito al crear el archivo...");
+                _log.Info($"Ruta del archivo {RutaUbicacion}");
             }
             catch (IOException ex)
             {
-                _log.Error($"Error al guardar el archivo  {ex.StackTrace}");
+                _log.Warn($"Error al crear el archivo {ex.StackTrace}" );
                 throw ex;
             }
+            return RutaUbicacion;
         }
-        #endregion
-        #region CELDAS FINAL
-        private void GenerarCeldaFinal()
-        {
-            celdaFinal += (char)(celdaInicio + data[0].Length - 1);
-        }
-        #endregion
-        #region DISEÑO
-        private int GenerarBorder()
-        {
-            for (int a = 0; a < data.Count(); a++)
-            {
-                Border(0, $"{celdaInicio}{positionInicion}:{celdaFinal}{positionInicion}");
-                positionInicion++;
-            }
-            Dispos(true);
-            return positionInicion;
-        }
-        private void ColorCelda(string celda, Color color)
-        {
-            worksheet.Cells[celda].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            worksheet.Cells[celda].Style.Fill.BackgroundColor.SetColor(color);
-        }
-        private void Border(int position, string celda)
-        {
-            switch (position)
-            {
-                case 0:
-                    worksheet.Cells[celda].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                    worksheet.Cells[celda].Style.Border.Left.Style = ExcelBorderStyle.Thin;
-                    worksheet.Cells[celda].Style.Border.Right.Style = ExcelBorderStyle.Thin;
-                    worksheet.Cells[celda].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
-                    break;
-                case 1:
-                    worksheet.Cells[celda].Style.Border.Top.Style = ExcelBorderStyle.Thin;
-                    break;
-            }
-            worksheet.Cells[celda].Style.Font.Bold = false;
-            Dispos(true);
-        }
-        private void Filtro(string range)
-        {
-            if (encabezados != null)
-            {
-                if (encabezados.Count <= 2)
-                {
-                    worksheet.Cells[range].AutoFilter = true;
-                }
-            }
-            else
-            {
-                worksheet.Cells[range].AutoFilter = true;
-            }
-        }
-        private void TextoAjuste(int opcion, string celda)
-        {
-            switch (opcion)
-            {
-                case 1:
-                    worksheet.Cells[celda].AutoFitColumns();
-                    break;
-            }
-        }
-        private void ColorTexto(string celda, Color fondo, Color colorTexto, int size)
-        {
-            worksheet.Cells[celda].Style.Font.Bold = true;
-            worksheet.Cells[celda].Style.Font.Size = size;
-            worksheet.Cells[celda].Style.Fill.PatternType = ExcelFillStyle.Solid;
-            worksheet.Cells[celda].Style.Fill.BackgroundColor.SetColor(fondo);
-            worksheet.Cells[celda].Style.Font.Color.SetColor(colorTexto);
-        }
-        private void AlineacionTexto(string celda, ExcelVerticalAlignment vertical, ExcelHorizontalAlignment horizontal)
-        {
-            worksheet.Cells[celda].Style.VerticalAlignment = vertical;
-            worksheet.Cells[celda].Style.HorizontalAlignment = horizontal;
-        }
-        private void Texto(string celda, string texto)
-        {
-            worksheet.Cells[celda].Value = texto;
-        }
-        private void Combinacion(string celda)
-        {
-            worksheet.Cells[celda].Merge = true;
-            worksheet.Cells[celda].Style.WrapText = true;
-        }
-        #endregion
-        #region ELIMINAR ARCHIVO
         public Task<bool> Delete()
         {
             bool resp;
@@ -408,67 +218,192 @@ namespace ExcelNugget02
                 else
                     resp = true;
                 Dispos(true);
+                _log.Info("Archivo eliminado con exito...");
                 return Task.FromResult(resp);
             }
             catch (IOException ex)
             {
-                _log.Error($"Error al eliminar el archivo  {ex.StackTrace}");
+                _log.Warn($"Error al eliminar el archivo excel {ex.StackTrace}");
                 return Task.FromResult(false);
             }
         }
         #endregion
-        #region UBICACION
-        public string Ubicacion()
-        {
-            try
-            {
-                return UbicacionDoc;
-            }
-            catch (IOException ex)
-            {
-                _log.Error($"Error al guardar la ubicacion {ex.StackTrace}");
-                throw ex;
-            }
-        }
-        #endregion
-        #region HEADER
-        private bool Header()
-        {
-            try
-            {
-                excel.Workbook.Worksheets.Add($"HOJA1 {DateTime.Now.ToString("dd-MM-yyyy")}");
-                string range = Convertir32(headerRow);
-                worksheet = excel.Workbook.Worksheets[$"HOJA1 {DateTime.Now.ToString("dd-MM-yyyy")}"];
-                Filtro(range);
-                Encabezado();
-                CargarData(range, headerRow);
-                AlineacionTexto(range, ExcelVerticalAlignment.Bottom, ExcelHorizontalAlignment.Left);
-                ColorTexto(range, Color.WhiteSmoke, Color.Black, 12);
-                TextoAjuste(1, range);
-                positionInicion++;
-                Dispos(true);
-                return true;
-            }
-            catch (IOException ex)
-            {
-                throw ex;
-            }
-        }
-        #endregion
-        #region CONVERTIR DATA Y CARGAR
-        private void CargarData(string celda, List<string[]> datos)
-        {
-            worksheet.Cells[celda].LoadFromArrays(datos);
-        }
+
+        #region CONVERT 32
         private string Convertir32(List<string[]> datos)
         {
             return $"{celdaInicio}{positionInicion}:{char.ConvertFromUtf32(data[0].Length + 64)}{positionInicion}";
         }
         #endregion
+
+        #region METODOS DISEÑO
+        private int GenerarBorder()
+        {
+            int position = positionInicion;
+            for (int a = 0; a < data.Count(); a++)
+            {
+                Border(0, $"{celdaInicio}{position}:{celdaFinal}{position}");
+                position++;
+            }
+            position = 0;
+            Dispos(true);
+            return positionInicion;
+        }
+        private void ColorCelda(string celda, Color color)
+        {
+            try
+            {
+                worksheet.Cells[celda].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[celda].Style.Fill.BackgroundColor.SetColor(color);
+            }
+            catch (Exception ex)
+            {
+
+                _log.Error($"Errror al asignar Color celda {ex.StackTrace}");
+            }
+
+
+        }
+        private void Border(int position, string celda)
+        {
+            try
+            {
+                switch (position)
+                {
+                    case 0:
+                        worksheet.Cells[celda].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[celda].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[celda].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        worksheet.Cells[celda].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        break;
+                    case 1:
+                        worksheet.Cells[celda].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                        break;
+                }
+                worksheet.Cells[celda].Style.Font.Bold = false;
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error al asignar el borde a la celda  {ex.StackTrace}");
+            }
+
+        }
+        private void TextoAjuste(int opcion, string celda)
+        {
+            try
+            {
+                switch (opcion)
+                {
+                    case 1:
+                        worksheet.Cells[celda].AutoFitColumns();
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error a ajustar el texto {ex.StackTrace}");
+
+            }
+
+        }
+        private void ColorTexto(string celda, Color fondo, Color colorTexto, int size)
+        {
+            try
+            {
+                worksheet.Cells[celda].Style.Font.Bold = true;
+                worksheet.Cells[celda].Style.Font.Size = size;
+                worksheet.Cells[celda].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                worksheet.Cells[celda].Style.Fill.BackgroundColor.SetColor(fondo);
+                worksheet.Cells[celda].Style.Font.Color.SetColor(colorTexto);
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error a asignarle el color a la celda {ex.StackTrace}");
+
+            }
+
+        }
+        private void AlineacionTexto(string celda, ExcelVerticalAlignment vertical, ExcelHorizontalAlignment horizontal)
+        {
+            try
+            {
+                worksheet.Cells[celda].Style.VerticalAlignment = vertical;
+                worksheet.Cells[celda].Style.HorizontalAlignment = horizontal;
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error a aliniar el texto {ex.StackTrace}");
+
+            }
+
+        }
+        private void Texto(string celda, string texto)
+        {
+            try
+            {
+                worksheet.Cells[celda].Value = texto;
+            }
+            catch (Exception ex)
+            {
+
+                _log.Error($"Error del texto{ex.StackTrace}");
+            }
+
+        }
+        private void Combinacion(string celda)
+        {
+            try
+            {
+                worksheet.Cells[celda].Merge = true;
+                worksheet.Cells[celda].Style.WrapText = true;
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error al conbinacion de texto{ex.StackTrace}");
+            }
+
+        }
+        #endregion
+
+        #region CARGAR DATA Y FILTRO 
+        private void Filtro(string range)
+        {
+            worksheet.Cells[range].AutoFilter = true;
+        }
+        private void CargarData(string celda, List<string[]> datos)
+        {
+            try
+            {
+                worksheet.Cells[celda].LoadFromArrays(datos);
+                _log.Info("Cargo la Data con exito..");
+            }
+            catch (Exception ex)
+            {
+                _log.Error($"Error al cargar  la data {ex.StackTrace}");
+
+            }
+
+        }
+        #endregion
+
         #region LIBERACION MEMORIA
+        private void Limpiar()
+        {
+            using (MemoryStream me = new MemoryStream())
+            {
+                headerRow.Clear();
+                data.Clear();
+                worksheet = null;
+                dataconte = null;
+                attributes = null;
+                properties = null;
+                me.Dispose();
+            }
+            Dispos(true);
+        }
         public void Dispos(bool reps)
         {
-            if (resp)
+            if (reps)
             {
                 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
                 GC.Collect();
@@ -478,35 +413,10 @@ namespace ExcelNugget02
         {
             GC.Collect();
         }
+
+
         #endregion
-        #region DESCRIPCION
-        private void CodigosDescripcion(int numeroCelda)
-        {
-            try
-            {
-                if (Cod != null)
-                {
-                    numeroCelda = numeroCelda - 5;
-                    foreach (var cd in Cod)
-                    {
-                        Texto($"{cd.Celda}{numeroCelda}", cd.Conten);
-                        Combinacion($"{cd.Celda}{numeroCelda}:{cd.Celda}{numeroCelda}");
-                        Border(0, $"{cd.Celda}{numeroCelda}:{cd.Celda}{numeroCelda}");
-                        numeroCelda = numeroCelda + 1;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                _log.Warn($"Error al insertar codigo {ex.StackTrace}");
-            }
-        }
-        public void CodigoDescrip(List<Content> codigo)
-        {
-            this.Cod = codigo;
-        }
-        #endregion
-        #endregion
+
     }
 }
 

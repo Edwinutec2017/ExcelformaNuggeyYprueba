@@ -25,6 +25,7 @@ namespace PrueebasNugguet2
         public Excel(string proceso)
         {
             if (proceso.Equals("convdeuda")) {
+                _proceso = proceso;
                 celdaInicio = 'A';
                 positionInicion = 1;
             }
@@ -32,6 +33,7 @@ namespace PrueebasNugguet2
         }
         #endregion
         #region Atributos
+        private readonly string _proceso = null; 
         private ExtraerConten extra = new ExtraerConten();
         private char celdaInicio, celdaFinal;
         private int positionInicion;
@@ -116,7 +118,9 @@ namespace PrueebasNugguet2
                         }
                         data.Add(dataconte);
                     }
-                    Main();
+                    Header();
+                    Content();
+                    Save();
                 }
                 Dispos(true);
                 return Task.FromResult(true);
@@ -174,6 +178,7 @@ namespace PrueebasNugguet2
         {
             try
             {
+                
                 var execel = $@"{UbicacionDoc}/Excel/{nombre_archivo} {DateTime.Now.ToString("dd-MM-yyyy hh-mm-s")}.xlsx";
                 Console.WriteLine($"Ruta del Archivo {execel}");
                 FileInfo excelFile = new FileInfo(execel);
@@ -327,9 +332,23 @@ namespace PrueebasNugguet2
         {
             try
             {
-                excel.Workbook.Worksheets.Add($"HOJA1 {DateTime.Now.ToString("dd-MM-yyyy")}");
+                if (_proceso.Equals("convdeuda"))
+                {
+                    excel.Workbook.Worksheets.Add($"HOJA1");
+                }
+                else {
+                    excel.Workbook.Worksheets.Add($"HOJA1 {DateTime.Now.ToString("dd-MM-yyyy")}");
+                }
                 string range = Convertir32(headerRow);
-                worksheet = excel.Workbook.Worksheets[$"HOJA1 {DateTime.Now.ToString("dd-MM-yyyy")}"];
+                if (_proceso.Equals("convdeuda"))
+                {
+                    worksheet = excel.Workbook.Worksheets[$"HOJA1"];
+                }
+                else
+                {
+                    worksheet = excel.Workbook.Worksheets[$"HOJA1 {DateTime.Now.ToString("dd-MM-yyyy")}"];
+                }
+               
                 Filtro(range);
                 Encabezado();
                 CargarData(range, headerRow);

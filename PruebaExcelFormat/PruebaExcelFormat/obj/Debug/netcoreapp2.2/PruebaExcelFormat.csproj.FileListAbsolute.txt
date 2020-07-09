@@ -19,3 +19,4 @@ E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\ne
 E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.AssemblyInfo.cs
 E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.dll
 E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.pdb
+E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.csprojAssemblyReference.cache

@@ -136,11 +136,10 @@ namespace PrueebasNugguet2
 
             Console.WriteLine("Hello World!");
             IExcel excel = new Excel("convdeuda");
-            excel.GuardarArchivo(null, "pruebaImagen5");
-         
+            excel.GuardarArchivo(null, "SEPP_DNP_08072020");
             excel.NewContent(lista);
               Console.WriteLine(excel.Ubicacion());
-            Console.ReadLine();
+              Console.ReadLine();
              //lista.Clear();
             excel.Delete();
         }
