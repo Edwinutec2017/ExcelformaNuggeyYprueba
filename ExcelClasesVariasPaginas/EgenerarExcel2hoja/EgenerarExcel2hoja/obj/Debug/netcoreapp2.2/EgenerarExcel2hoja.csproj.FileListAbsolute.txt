@@ -1,0 +1,11 @@
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.deps.json
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.runtimeconfig.json
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.runtimeconfig.dev.json
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.dll
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.csprojAssemblyReference.cache
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.csproj.CoreCompileInputs.cache
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.AssemblyInfoInputs.cache
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.AssemblyInfo.cs
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.pdb
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.dll
+C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.pdb
