@@ -11,22 +11,28 @@ namespace EgenerarExcel2hoja
             IList<Prueba> lista =
             new List<Prueba>();
             Prueba pp;
+
             for (int a = 1; a <= 100; a++)
             {
                 pp = new Prueba()
                 {
-                    Name = $"a00000000000000: {a}",
-                    Edad = 25123232,
-                    Apellido = "123",
-                    Anio = 201912323,
-                    Fecha = 20191223,
-                    Hora = 1451
+                    PLANUM = "980150263312",
+                    PERIODO = "201909",
+                    NIT = "04130101470019",
+                    RAZON_SOCIAL= "LANDAVERDE FLORES GREGORIO DE JESUS",
+                    ID_SUCURSAL= "001",
+                    EMPLEADOS_DECLARADOS= "1",
+                    MONTO_TOTAL= "60",
+                    ARCHIVO= "MAX010325057510200012020010001.ZIP",
+                    NPE= "05450000600000041781012020001202002140",
+                    FECHA_ADICION= "2020-02-07-13.50.08.037772",
+                    FECHA_PRESENTACIÓN= "7/2/2020",
+                    CATEGORIA= "CJU"
                 };
                 lista.Add(pp);
             }
-            
 
-            string nombreat=$"Sepp_dnp { DateTime.Now.ToString("dd-MM-yyyy hh-mm-s")}";
+            string nombreat=$"Sepp_dnp_{DateTime.Now.ToString("ddMMyyyy")}";
             Excel excel = new Excel("convdeuda");
             excel.ArchivoRuta(null, nombreat);
             string ho = "hoja1";
@@ -34,11 +40,6 @@ namespace EgenerarExcel2hoja
             excel.NewContent(lista,ho);
             ho = "Hoja2";
             excel.NewContent(lista, ho);
-            ho = "Hoka3";
-            excel.NewContent(lista, ho);
-            ho = "Hoka4";
-            excel.NewContent(lista, ho);
-
             Console.WriteLine(excel.Guardar());
       
             Console.ReadLine();

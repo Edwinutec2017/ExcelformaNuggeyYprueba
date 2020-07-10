@@ -31,7 +31,7 @@
           "lib/netstandard2.0/EPPlus.Core.Extensions.dll": {}
         }
       },
-      "ExcelFormat/1.1.23": {
+      "ExcelFormat/1.1.24": {
         "type": "package",
         "dependencies": {
           "EPPlus.Core.Extensions": "2.4.0",
@@ -1904,14 +1904,14 @@
         "lib/netstandard2.0/EPPlus.Core.Extensions.xml"
       ]
     },
-    "ExcelFormat/1.1.23": {
-      "sha512": "n6ZsGADyIkf8JDCCKfzkSsbgn0X9VpF3kUvfhA72ntrgoOvj5XOfNBhSwBVLZigR0jFA2sC8uDPQ6BZF8gA+bA==",
+    "ExcelFormat/1.1.24": {
+      "sha512": "kDe8pJpe2aku93Ph5dKqaa2P5L+Cs1TTTGlw4/0K+i/HXfYHNjIil72eEgVolSyL90Y2mckj9J+6zNU8eIPW4A==",
       "type": "package",
-      "path": "excelformat/1.1.23",
+      "path": "excelformat/1.1.24",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "excelformat.1.1.23.nupkg.sha512",
+        "excelformat.1.1.24.nupkg.sha512",
         "excelformat.nuspec",
         "lib/netcoreapp2.2/ExcelNugget02.dll"
       ]
@@ -6274,7 +6274,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "ExcelFormat >= 1.1.23",
+      "ExcelFormat >= 1.1.24",
       "Microsoft.NETCore.App >= 2.2.0"
     ]
   },
@@ -6321,7 +6321,7 @@
         "dependencies": {
           "ExcelFormat": {
             "target": "Package",
-            "version": "[1.1.23, )"
+            "version": "[1.1.24, )"
           },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",

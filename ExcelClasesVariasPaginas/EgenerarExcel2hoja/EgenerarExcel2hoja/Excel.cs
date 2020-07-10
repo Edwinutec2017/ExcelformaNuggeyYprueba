@@ -122,6 +122,7 @@ namespace EgenerarExcel2hoja
                 string range = Convertir32(data);
                 worksheet.Cells[range].LoadFromArrays(data);
                 GenerarCeldaFinal();
+                if(_proceso==null)
                 GenerarBorder();
                 positionInicion--;
                 Dispos(true);

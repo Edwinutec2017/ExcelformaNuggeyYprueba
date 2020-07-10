@@ -6259,7 +6259,7 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.1.23",
+    "version": "1.1.24",
     "restore": {
       "projectUniqueName": "E:\\Repo\\ExcelformaNuggeyYprueba\\ExcelNugget02\\ExcelNugget02\\ExcelNugget02.csproj",
       "projectName": "ExcelFormat",

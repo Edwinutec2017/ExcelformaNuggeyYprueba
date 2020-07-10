@@ -6261,11 +6261,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\alex\\source\\repos\\EgenerarExcel2hoja\\EgenerarExcel2hoja\\EgenerarExcel2hoja.csproj",
+      "projectUniqueName": "E:\\Repo\\ExcelformaNuggeyYprueba\\ExcelClasesVariasPaginas\\EgenerarExcel2hoja\\EgenerarExcel2hoja\\EgenerarExcel2hoja.csproj",
       "projectName": "EgenerarExcel2hoja",
-      "projectPath": "C:\\Users\\alex\\source\\repos\\EgenerarExcel2hoja\\EgenerarExcel2hoja\\EgenerarExcel2hoja.csproj",
+      "projectPath": "E:\\Repo\\ExcelformaNuggeyYprueba\\ExcelClasesVariasPaginas\\EgenerarExcel2hoja\\EgenerarExcel2hoja\\EgenerarExcel2hoja.csproj",
       "packagesPath": "C:\\Users\\alex\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\alex\\source\\repos\\EgenerarExcel2hoja\\EgenerarExcel2hoja\\obj\\",
+      "outputPath": "E:\\Repo\\ExcelformaNuggeyYprueba\\ExcelClasesVariasPaginas\\EgenerarExcel2hoja\\EgenerarExcel2hoja\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

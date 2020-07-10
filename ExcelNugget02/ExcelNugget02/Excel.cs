@@ -129,7 +129,8 @@ namespace ExcelNugget02
                 string range = Convertir32(data);
                 worksheet.Cells[range].LoadFromArrays(data);
                 GenerarCeldaFinal();
-                GenerarBorder();
+                if (_proceso == null)
+                    GenerarBorder();
                 positionInicion--;
                 Dispos(true);
                 return true;

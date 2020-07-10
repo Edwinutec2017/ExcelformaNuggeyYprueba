@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.2": {
-      "ExcelNugget02/1.1.23": {
+      "ExcelNugget02/1.1.24": {
         "dependencies": {
           "EPPlus.Core.Extensions": "2.4.0",
           "log4net": "2.0.8"
@@ -1235,7 +1235,7 @@
     }
   },
   "libraries": {
-    "ExcelNugget02/1.1.23": {
+    "ExcelNugget02/1.1.24": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

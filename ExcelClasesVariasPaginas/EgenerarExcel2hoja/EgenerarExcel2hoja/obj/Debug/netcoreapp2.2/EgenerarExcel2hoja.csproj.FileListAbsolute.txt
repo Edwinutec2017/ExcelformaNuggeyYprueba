@@ -9,3 +9,14 @@ C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netco
 C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.pdb
 C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.dll
 C:\Users\alex\source\repos\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.pdb
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.deps.json
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.runtimeconfig.json
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.runtimeconfig.dev.json
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.dll
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\bin\Debug\netcoreapp2.2\EgenerarExcel2hoja.pdb
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.csprojAssemblyReference.cache
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.csproj.CoreCompileInputs.cache
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.AssemblyInfoInputs.cache
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.AssemblyInfo.cs
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.dll
+E:\Repo\ExcelformaNuggeyYprueba\ExcelClasesVariasPaginas\EgenerarExcel2hoja\EgenerarExcel2hoja\obj\Debug\netcoreapp2.2\EgenerarExcel2hoja.pdb
