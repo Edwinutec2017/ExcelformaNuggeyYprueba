@@ -1,10 +1,14 @@
-﻿using ExcelNugget02.Dtos;
+﻿using ExcelNugget02.Class;
+using ExcelNugget02.Dtos;
 using ExcelNugget02.Interfaces;
 using log4net;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
+using Polly;
+using Polly.Retry;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -15,13 +19,16 @@ using System.Threading.Tasks;
 
 namespace ExcelNugget02
 {
-    public class Excel : IExcel, IDisposable
+    public class Excel : IExcel
     {
         #region constructor
         public Excel()
         {
             celdaInicio = 'A';
             positionInicion = 2;
+            _retryCount = 4;
+            _count = 0;
+            _resp = false;
         }
         #region PROCESO GENERAR DEUDA
         public Excel(string proceso)
@@ -31,6 +38,9 @@ namespace ExcelNugget02
                 _proceso = proceso;
                 celdaInicio = 'A';
                 positionInicion = 1;
+                _retryCount = 4;
+                _count = 0;
+                _resp = false;
             }
 
         }
@@ -52,6 +62,10 @@ namespace ExcelNugget02
         private ExcelPackage excel = new ExcelPackage();
         private string nombre_archivo = "";
         private string UbicacionDoc;
+        private static int _retryCount;
+        private static int _count;
+        private static bool _resp;
+        private Fecha _fecha = new Fecha();
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         #endregion
 
@@ -73,161 +87,258 @@ namespace ExcelNugget02
         #endregion
 
         #region CONTENIDO
+
+        #region GENERA EXCEL
         public Task<bool> NewContent<T>(List<T> datos, string hoja)
         {
+            _resp = false;
+            _count = 0;
             try
             {
-                if (datos.Count > 0)
-                {
-                    var cantidad = extra.GetHeader(datos.FirstOrDefault());
-                    headerRow = extra.Data();
-                    dataconte = null;
-                    foreach (object obj in datos)
+                var policyExcel = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
+                   WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                   {
+                       _count++;
+                       _log.Warn($"Intenton {_count} Para crear el excel {_fecha.FechaNow().Result}");
+                   });
+
+                policyExcel.Execute(()=> {
+                    if (datos.Count > 0)
                     {
-                        dataconte = new string[cantidad];
-                        var indice = 0;
-                        properties = obj.GetType().GetProperties();
-                        foreach (PropertyInfo property in properties)
+                        var cantidad = extra.GetHeader(datos.FirstOrDefault());
+                        headerRow = extra.Data();
+                        dataconte = null;
+                        foreach (object obj in datos)
                         {
-                            attributes = property.GetCustomAttributes(typeof(DescripcionExcel), true);
-                            if (attributes.Length > 0)
+                            dataconte = new string[cantidad];
+                            var indice = 0;
+                            properties = obj.GetType().GetProperties();
+                            foreach (PropertyInfo property in properties)
                             {
-                                myAttribute = (DescripcionExcel)attributes[0];
-                                if (!myAttribute.Ignore)
+                                attributes = property.GetCustomAttributes(typeof(DescripcionExcel), true);
+                                if (attributes.Length > 0)
                                 {
-                                    if (property.GetValue(obj) != null)
+                                    myAttribute = (DescripcionExcel)attributes[0];
+                                    if (!myAttribute.Ignore)
                                     {
-                                        dataconte[indice] = property.GetValue(obj).ToString();
+                                        if (property.GetValue(obj) != null)
+                                        {
+                                            dataconte[indice] = property.GetValue(obj).ToString();
+                                        }
+                                        else
+                                            dataconte[indice] = "";
                                     }
                                     else
-                                        dataconte[indice] = "";
+                                        indice--;
                                 }
-                                else
-                                    indice--;
+                                indice++;
                             }
-                            indice++;
+                            data.Add(dataconte);
                         }
-                        data.Add(dataconte);
+                         bool resp= Header(hoja).Result;
+                         if(resp)
+                           resp= Content().Result;
+
+                        Limpiar();
+                        _log.Info($"Archivo excel creado con exito {_fecha.FechaNow().Result}");
                     }
-                    Header(hoja);
-                    Content();
-                    Limpiar();
-                }
-                Dispos(true);
-                return Task.FromResult(true);
+                    Dispos(true);
+                });
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
-               _log.Error($"Error en el contenido {ex.StackTrace}");
-                throw ex;
+                _log.Fatal($"Se ejecutaron  {_count} intentos para  la creacion del excel {_fecha.FechaNow().Result}");
+               _log.Error($"Exce {ex.StackTrace}");
+                _count = 0;
             }
-        }
-        private bool Content()
-        {
-            try
-            {
-                string range = Convertir32(data);
-                worksheet.Cells[range].LoadFromArrays(data);
-                GenerarCeldaFinal();
-                if (_proceso == null)
-                    GenerarBorder();
-                positionInicion--;
-                Dispos(true);
-                return true;
-            }
-            catch (IOException ex)
-            {
-              _log.Warn($"Error al guardar el contenido del excel {ex.StackTrace}");
-              throw ex;
-            }
-        }
-        private bool Header(string nombrehoja)
-        {
-            try
-            {
-                excel.Workbook.Worksheets.Add(nombrehoja);
-                string range = Convertir32(headerRow);
-                worksheet = excel.Workbook.Worksheets[nombrehoja];
-                Filtro(range);
-                Encabezado();
-                CargarData(range, headerRow);
-                AlineacionTexto(range, ExcelVerticalAlignment.Bottom, ExcelHorizontalAlignment.Left);
-                ColorTexto(range, Color.WhiteSmoke, Color.Black, 12);
-                TextoAjuste(1, range);
-                positionInicion++;
-                Dispos(true);
-                _log.Info($"Creacion con exito de los Headers de las columnas. {nombrehoja}");
-                return true;
-            }
-            catch (IOException ex)
-            {
-                _log.Error($"Error al crear encabezados de columnas {ex.StackTrace}");
-                throw ex;
-            }
+            return Task.FromResult(_resp);
         }
         #endregion
 
-        #region RUTA ARCHIVO
-        public void ArchivoRuta(string ubicacion, string nombre_archivo)
+        #region CONTENIDO
+        private Task<bool> Content()
         {
+            _resp = false;
+            _count = 0;
             try
             {
-                this.nombre_archivo = nombre_archivo;
-                Console.WriteLine($"Nombre {nombre_archivo}");
-                if (string.IsNullOrEmpty(ubicacion))
-                    this.UbicacionDoc = Directory.GetCurrentDirectory();
-                else
-                    this.UbicacionDoc = ubicacion;
+                var policyConten = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
+                    WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                    {
+                        _count++;
+                        _log.Fatal($"Intento {_count} para crear el contenido del excel {_fecha.FechaNow().Result}");
+                    });
+
+                policyConten.Execute(() =>
+                {
+                    string range = Convertir32(data);
+                    worksheet.Cells[range].LoadFromArrays(data);
+                    GenerarCeldaFinal();
+                    if (_proceso == null)
+                        GenerarBorder();
+                    positionInicion--;
+                    _resp = true;
+                });
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
-                _log.Error($"Error al crear el directorio {ex.StackTrace}");
-                throw ex;
+                _log.Fatal($"Se ejecutaron {_count} intentos  para generar el contenido {_fecha.FechaNow().Result}");
+                _count = 0;
+              _log.Warn($"Excepcion {ex.StackTrace}");
+            
             }
             Dispos(true);
+            return Task.FromResult(_resp);
         }
-        public string Guardar()
+        #endregion
+
+        #region HEADER
+        private Task<bool> Header(string nombrehoja)
+        {
+            _resp = false;
+            _count = 0;
+            try
+            {
+                var policyHeader = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
+                    WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (excel, time) => {
+                        _count++;
+                        _log.Warn($"Intento {_count} para crear el Header {_fecha.FechaNow().Result}");
+                    });
+
+                policyHeader.Execute(()=> {
+                    excel.Workbook.Worksheets.Add(nombrehoja);
+                    string range = Convertir32(headerRow);
+                    worksheet = excel.Workbook.Worksheets[nombrehoja];
+                    Filtro(range);
+                    Encabezado();
+                    CargarData(range, headerRow);
+                    AlineacionTexto(range, ExcelVerticalAlignment.Bottom, ExcelHorizontalAlignment.Left);
+                    ColorTexto(range, Color.WhiteSmoke, Color.Black, 12);
+                    TextoAjuste(1, range);
+                    positionInicion++;
+                    _log.Info($"Creacion con exito de los Headers de las columnas.");
+                    _resp = true;
+                });
+            }
+            catch (Exception ex)
+            {
+                _log.Warn($"se ejecutaron  {_count} intentos  Para crear los Header {_fecha.FechaNow().Result}");
+                _log.Error($"Excepcion {ex.StackTrace}");
+                _count = 0;
+            }
+            Dispose();
+            return  Task.FromResult(_resp);
+        }
+        #endregion
+
+        #endregion
+
+        #region RUTA ARCHIVO
+        #region CREAR DIRECTORIO
+        public Task<bool> ArchivoRuta(string ubicacion, string nombre_archivo)
+        {
+            _resp = false;
+            _count = 0;
+            try
+            {
+                var policyDirectorio = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
+                    WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                    {
+                        _count++;
+                        _log.Warn($"Intento {_count} para crear el directorio {_fecha.FechaNow().Result}");
+                    });
+
+                policyDirectorio.Execute(()=> {
+                    this.nombre_archivo = nombre_archivo;
+                    if (string.IsNullOrEmpty(ubicacion))
+                        this.UbicacionDoc = Directory.GetCurrentDirectory();
+                    else
+                        this.UbicacionDoc = ubicacion;
+                    _log.Info($"Directorio creado con exito {_fecha.FechaNow().Result}");
+                    _resp = true;
+                });
+            }
+            catch (Exception ex)
+            {
+                _log.Fatal($"Se ejecutaron {_count} intentos para ejecutar la creacion del directoio {_fecha.FechaNow().Result}");
+                _log.Error($"Exception {ex.StackTrace}");
+                _count = 0;
+            }
+            Dispos(true);
+            return Task.FromResult(_resp);
+        }
+        #endregion
+
+        #region Guardar el archivo
+        public Task<string> Guardar()
         {
             string RutaUbicacion = null;
+            _count = 0;
             try
             {
-                var execel = $@"{UbicacionDoc}/Excel/{nombre_archivo}.xlsx";
-                FileInfo excelFile = new FileInfo(execel);
-                excelFile.Directory.Create();
-                UbicacionDoc = excelFile.ToString();
-                excel.SaveAs(excelFile);
-                Dispos(true);
-                RutaUbicacion = UbicacionDoc;
-                _log.Info("Exito al crear el archivo...");
-                _log.Info($"Ruta del archivo {RutaUbicacion}");
+                var policySave=RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
+                       WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                       {
+                           _count++;
+                           _log.Warn($"Intenton {_count} Para guardar el archivo excel {_fecha.FechaNow().Result}");
+                       });
+
+                policySave.Execute(()=> {
+                    var execel = $@"{UbicacionDoc}/Excel/{nombre_archivo}.xlsx";
+                    FileInfo excelFile = new FileInfo(execel);
+                    excelFile.Directory.Create();
+                    UbicacionDoc = excelFile.ToString();
+                    excel.SaveAs(excelFile);
+                    Dispos(true);
+                    RutaUbicacion = UbicacionDoc;
+                    _log.Info($"Archivo guardado con exito {_fecha.FechaNow().Result}");
+                });
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
-                _log.Warn($"Error al crear el archivo {ex.StackTrace}" );
-                throw ex;
+                _log.Warn($"Intentos {_count} para poder guardar el archivo excel {_fecha.FechaNow().Result}");
+                _log.Warn($"Exception {ex.StackTrace}" );
+           
             }
-            return RutaUbicacion;
+            return Task.FromResult(RutaUbicacion);
         }
+        #endregion
+
+        #region ELIMINAR 
         public Task<bool> Delete()
         {
-            bool resp;
+            _resp = false;
+            _count = 0;
             try
             {
-                File.Delete(UbicacionDoc.ToString());
-                if (File.Exists(UbicacionDoc.ToString()))
-                    resp = false;
-                else
-                    resp = true;
-                Dispos(true);
-                _log.Info("Archivo eliminado con exito...");
-                return Task.FromResult(resp);
+                var policyDelete = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
+                    WaitAndRetry(_retryCount, retryAttempt=>TimeSpan.FromSeconds(Math.Pow(2,retryAttempt)),(ex,time)=> {
+                        _count++;
+                        _log.Fatal($"Intento {_count} para eliminar el archivo excel {_fecha.FechaNow().Result}");      
+                    });
+
+                policyDelete.Execute(()=> {
+
+                    if (File.Exists(UbicacionDoc.ToString()))
+                    {
+                        File.Delete(UbicacionDoc.ToString());
+                        _resp = true;
+                    }
+                    else 
+                        Process.Start(UbicacionDoc.ToString());
+                });
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
-                _log.Warn($"Error al eliminar el archivo excel {ex.StackTrace}");
-                return Task.FromResult(false);
+                _log.Warn($"Se ejecutaron {_count} intentos para eliminar el archivo excel !!! {_fecha.FechaNow().Result}");
+                _count = 0;
+                _log.Warn($"Excepcion {ex.StackTrace}");
             }
+            Dispos(true);
+            return Task.FromResult(_resp);
         }
+        #endregion
+
         #endregion
 
         #region CONVERT 32
@@ -407,12 +518,13 @@ namespace ExcelNugget02
             if (reps)
             {
                 GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-                GC.Collect();
+                GC.Collect(2,GCCollectionMode.Forced);
             }
         }
         public void Dispose()
         {
-            GC.Collect();
+            GC.Collect(2, GCCollectionMode.Forced);
+            GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
         }
 
 

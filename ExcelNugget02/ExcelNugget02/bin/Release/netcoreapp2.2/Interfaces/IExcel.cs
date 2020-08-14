@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ExcelNugget02.Interfaces
 {
-  public interface IExcel
+  public interface IExcel:IDisposable
     {
         Task<bool> NewContent<T>(List<T> datos, string hoja);
         Task<bool> Delete();
-        string Guardar();
-        void ArchivoRuta(string ubicacion, string nombre_archivo);
+        Task<string> Guardar();
+        Task<bool> ArchivoRuta(string ubicacion, string nombre_archivo);
     }
 }

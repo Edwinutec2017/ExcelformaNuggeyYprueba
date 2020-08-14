@@ -36,10 +36,10 @@ namespace PruebaExcelFormat
 
         
             Console.WriteLine("Hello World!");
-            IExcel excel = new Excel();
+            IExcel excel = new Excel("convdeuda");
             Console.WriteLine(lista.Count);
 
-            excel.ArchivoRuta(@"C:\Users\alex\Desktop\Prueba", $"SEPP_DN2P_{DateTime.Now.ToString("ddmmyyyy")}");
+            excel.ArchivoRuta(@"C:\Users\alex\Desktop\pdf", $"SEPP_DN2P_{DateTime.Now.ToString("ddmmyyyy")}");
             excel.NewContent(lista,"Hoja1");
             excel.NewContent(lista, "Hoja2");
             Console.WriteLine(excel.Guardar());
@@ -47,6 +47,6 @@ namespace PruebaExcelFormat
             //lista.Clear();
             //excel.Delete();
 
-        }
+        } 
     }
 }

@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("Actualizacion de epplus para net core")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.1.0.16")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.24")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.1.25")]
 [assembly: System.Reflection.AssemblyProductAttribute("ExcelNugget02")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ExcelNugget02")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.1.0.16")]
