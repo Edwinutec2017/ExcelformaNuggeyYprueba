@@ -31,10 +31,11 @@
           "lib/netstandard2.0/EPPlus.Core.Extensions.dll": {}
         }
       },
-      "ExcelFormat/1.1.24": {
+      "ExcelFormat/1.1.25": {
         "type": "package",
         "dependencies": {
           "EPPlus.Core.Extensions": "2.4.0",
+          "Polly": "7.2.1",
           "log4net": "2.0.8"
         },
         "compile": {
@@ -447,6 +448,15 @@
         },
         "runtime": {
           "lib/netstandard2.0/Newtonsoft.Json.dll": {}
+        }
+      },
+      "Polly/7.2.1": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/Polly.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Polly.dll": {}
         }
       },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
@@ -1904,14 +1914,14 @@
         "lib/netstandard2.0/EPPlus.Core.Extensions.xml"
       ]
     },
-    "ExcelFormat/1.1.24": {
-      "sha512": "kDe8pJpe2aku93Ph5dKqaa2P5L+Cs1TTTGlw4/0K+i/HXfYHNjIil72eEgVolSyL90Y2mckj9J+6zNU8eIPW4A==",
+    "ExcelFormat/1.1.25": {
+      "sha512": "qIUKZM7smOKEBER5bSxho7B7EXGn8wSQVzDFqIr8QUkhr3yuAJiw172T96519ah7WqSqVqLcX33P15ENUjs6FQ==",
       "type": "package",
-      "path": "excelformat/1.1.24",
+      "path": "excelformat/1.1.25",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "excelformat.1.1.24.nupkg.sha512",
+        "excelformat.1.1.25.nupkg.sha512",
         "excelformat.nuspec",
         "lib/netcoreapp2.2/ExcelNugget02.dll"
       ]
@@ -2632,6 +2642,29 @@
         "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
         "newtonsoft.json.11.0.2.nupkg.sha512",
         "newtonsoft.json.nuspec"
+      ]
+    },
+    "Polly/7.2.1": {
+      "sha512": "Od8SnPlpQr+PuAS0YzY3jgtzaDNknlIuAaldN2VEIyTvm/wCg22C5nUkUV1BEG8rIsub5RFMoV/NEQ0tM/+7Uw==",
+      "type": "package",
+      "path": "polly/7.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net461/Polly.dll",
+        "lib/net461/Polly.pdb",
+        "lib/net461/Polly.xml",
+        "lib/net472/Polly.dll",
+        "lib/net472/Polly.pdb",
+        "lib/net472/Polly.xml",
+        "lib/netstandard1.1/Polly.dll",
+        "lib/netstandard1.1/Polly.pdb",
+        "lib/netstandard1.1/Polly.xml",
+        "lib/netstandard2.0/Polly.dll",
+        "lib/netstandard2.0/Polly.pdb",
+        "lib/netstandard2.0/Polly.xml",
+        "polly.7.2.1.nupkg.sha512",
+        "polly.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
@@ -6274,7 +6307,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
-      "ExcelFormat >= 1.1.24",
+      "ExcelFormat >= 1.1.25",
       "Microsoft.NETCore.App >= 2.2.0"
     ]
   },
@@ -6321,7 +6354,7 @@
         "dependencies": {
           "ExcelFormat": {
             "target": "Package",
-            "version": "[1.1.24, )"
+            "version": "[1.1.25, )"
           },
           "Microsoft.NETCore.App": {
             "suppressParent": "All",

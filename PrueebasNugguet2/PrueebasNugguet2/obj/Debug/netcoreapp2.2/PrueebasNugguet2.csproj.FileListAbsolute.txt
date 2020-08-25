@@ -21,4 +21,3 @@ E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netc
 E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.AssemblyInfo.cs
 E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.dll
 E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.pdb
-E:\Repo\ExcelformaNuggeyYprueba\PrueebasNugguet2\PrueebasNugguet2\obj\Debug\netcoreapp2.2\PrueebasNugguet2.csprojAssemblyReference.cache

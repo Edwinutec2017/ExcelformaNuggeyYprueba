@@ -1,14 +1,14 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "f236fa7090ca91dd0a6f4335601932992a046680"
+    "signature": "2625918224cb34fa22ef45118054bcb2766f0eb5"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.2": {
       "PruebaExcelFormat/1.0.0": {
         "dependencies": {
-          "ExcelFormat": "1.1.24"
+          "ExcelFormat": "1.1.25"
         },
         "runtime": {
           "PruebaExcelFormat.dll": {}
@@ -41,9 +41,10 @@
           }
         }
       },
-      "ExcelFormat/1.1.24": {
+      "ExcelFormat/1.1.25": {
         "dependencies": {
           "EPPlus.Core.Extensions": "2.4.0",
+          "Polly": "7.2.1",
           "log4net": "2.0.8"
         },
         "runtime": {
@@ -232,6 +233,14 @@
           "lib/netstandard2.0/Newtonsoft.Json.dll": {
             "assemblyVersion": "11.0.0.0",
             "fileVersion": "11.0.2.21924"
+          }
+        }
+      },
+      "Polly/7.2.1": {
+        "runtime": {
+          "lib/netstandard2.0/Polly.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.2.1.0"
           }
         }
       },
@@ -1265,12 +1274,12 @@
       "path": "epplus.core.extensions/2.4.0",
       "hashPath": "epplus.core.extensions.2.4.0.nupkg.sha512"
     },
-    "ExcelFormat/1.1.24": {
+    "ExcelFormat/1.1.25": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-kDe8pJpe2aku93Ph5dKqaa2P5L+Cs1TTTGlw4/0K+i/HXfYHNjIil72eEgVolSyL90Y2mckj9J+6zNU8eIPW4A==",
-      "path": "excelformat/1.1.24",
-      "hashPath": "excelformat.1.1.24.nupkg.sha512"
+      "sha512": "sha512-qIUKZM7smOKEBER5bSxho7B7EXGn8wSQVzDFqIr8QUkhr3yuAJiw172T96519ah7WqSqVqLcX33P15ENUjs6FQ==",
+      "path": "excelformat/1.1.25",
+      "hashPath": "excelformat.1.1.25.nupkg.sha512"
     },
     "log4net/2.0.8": {
       "type": "package",
@@ -1369,6 +1378,13 @@
       "sha512": "sha512-IvJe1pj7JHEsP8B8J8DwlMEx8UInrs/x+9oVY+oCD13jpLu4JbJU2WCIsMRn5C4yW9+DgkaO8uiVE5VHKjpmdQ==",
       "path": "newtonsoft.json/11.0.2",
       "hashPath": "newtonsoft.json.11.0.2.nupkg.sha512"
+    },
+    "Polly/7.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Od8SnPlpQr+PuAS0YzY3jgtzaDNknlIuAaldN2VEIyTvm/wCg22C5nUkUV1BEG8rIsub5RFMoV/NEQ0tM/+7Uw==",
+      "path": "polly/7.2.1",
+      "hashPath": "polly.7.2.1.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.2": {
       "type": "package",

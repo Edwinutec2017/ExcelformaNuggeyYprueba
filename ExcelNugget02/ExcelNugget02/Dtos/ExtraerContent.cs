@@ -9,7 +9,7 @@ using System.Text;
 
 namespace ExcelNugget02.Dtos
 {
-   public class ExtraerContent
+   public class ExtraerContent:IDisposable
     {
         #region ATRIBUTOS
         private PropertyInfo[] properties = null;

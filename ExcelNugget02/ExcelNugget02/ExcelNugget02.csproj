@@ -26,4 +26,8 @@
     </Compile>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Class\" />
+  </ItemGroup>
+
 </Project>

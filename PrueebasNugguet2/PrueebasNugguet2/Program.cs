@@ -1,4 +1,7 @@
-﻿using PrueebasNugguet2.Interfaces;
+﻿
+using ExcelNugget02;
+using ExcelNugget02.Interfaces;
+using PruebaExcelFormat;
 using System;
 using System.Collections.Generic;
 
@@ -8,140 +11,101 @@ namespace PrueebasNugguet2
     {
         static void Main(string[] args)
         {
-            IList<Prueba> lista =
-            new List<Prueba>();
+            List<Prueba> lista = new List<Prueba>();
             Prueba pp;
-            for (int a = 1; a <= 5; a++)
+            for (int a = 1; a <= 50; a++)
             {
                 pp = new Prueba()
                 {
-                    Name = $"a00000000000000: {a}",
-                    Edad = 25123232,
-                    Apellido = "123",
-                    Anio = 201912323,
-                    Fecha = 20191223,
-                    Hora = 1451
+                    PLANUM = "980150263312",
+                    PERIODO = "201909",
+                    NIT = "04130101470019",
+                    RAZON_SOCIAL = "LANDAVERDE FLORES GREGORIO DE JESUS",
+                    ID_SUCURSAL = "001",
+                    EMPLEADOS_DECLARADOS = "1",
+                    MONTO_TOTAL = "60",
+                    ARCHIVO = "MAX010325057510200012020010001.ZIP",
+                    NPE = "05450000600000041781012020001202002140",
+                    FECHA_ADICION = "2020-02-07-13.50.08.037772",
+                    FECHA_PRESENTACIÓN = "7/2/2020",
+                    CATEGORIA = "05450000456300065347032020001202004177",
+                    CC = "123"
                 };
                 lista.Add(pp);
             }
 
-            //List <Content> encabezado = new List<Content>() {
-            //     new Content(){
-            //        Conten="NOTIFICACIÓN DE PLANILLA ENVIADA POR EL SEPP QUE GENERARÁ DEUDA",
-            //        Celda='A',
-            //        PositionCelda=5
-            //    },
-            //      new Content(){
-            //        Conten="Nit del Empleador:",
-            //        Celda='A',
-            //        PositionCelda=7
-            //    },
-            //      new Content(){
-            //        Conten="Razón Social:",
-            //        Celda='A',
-            //        PositionCelda=8
-            //    },
-            //      new Content(){
-            //        Conten="Ubicación físca:",
-            //        Celda='B',
-            //        PositionCelda=1
-            //    },
-            //      new Content(){
-            //        Conten="Folio:",
-            //        Celda='B',
-            //        PositionCelda=2
-            //    },
-            //        new Content(){
-            //        Conten="Usuario:",
-            //        Celda='E',
-            //        PositionCelda=1
-            //    },
-            //        new Content(){
-            //        Conten="Fecha Emisión:",
-            //        Celda='E',
-            //        PositionCelda=2
-            //    },
-            //        new Content(){
-            //        Conten="Hora Emisión:",
-            //        Celda='E',
-            //        PositionCelda=3
-            //    },
-            //           new Content(){
-            //        Conten="Supervisor:",
-            //        Celda='E',
-            //        PositionCelda=4
-            //    },
-            //              new Content(){
-            //        Conten="Asesor:",
-            //        Celda='E',
-            //        PositionCelda=6
-            //    },
-            //                 new Content(){
-            //        Conten="Gestor Servicio a Empresas:",
-            //        Celda='E',
-            //        PositionCelda=7
-            //    },
+            List<Prueba2> lista2 = new List<Prueba2>();
+            Prueba2 p2;
+            for (int a = 1; a <= 50; a++)
+            {
+                p2 = new Prueba2()
+                {
+                    PLANUM = "980150263312",
+                    PERIODO = "201909",
+                    NIT = "04130101470019",
+                    RAZON_SOCIAL = "LANDAVERDE FLORES GREGORIO DE JESUS",
+                    ID_SUCURSAL = "001",
+                    EMPLEADOS_DECLARADOS = "1",
+                    MONTO_TOTAL = "60",
+                    ARCHIVO = "MAX010325057510200012020010001.ZIP",
+                    NPE = "05450000600000041781012020001202002140",
+                    FECHA_ADICION = "2020-02-07-13.50.08.037772",
+                    FECHA_PRESENTACIÓN = "7/2/2020",
+                    CATEGORIA = "05450000456300065347032020001202004177",
+                    CC = "123",
+                    Name = "edwin nolasco",
+                    Tele = "123456789"
+                };
+                lista2.Add(p2);
+            }
 
-            //};
-            //List<Content> pie = new List<Content>() {
-            //    new Content(){
-            //        Conten="FECHA",
-            //        Celda='D'
-            //    },
-            //       new Content(){
-            //        Conten="FIRMA Y SELLO",
-            //        Celda='E'
-            //    },
-            //        new Content(){
-            //        Conten="Nota: Con base a correspondencia SAPEN-ISP-014290 de " +
-            //        "fecha 02 de Junio 2016 de la Superintendencia " +
-            //        "del Sistema Financiero que dice: Toda planilla " +
-            //        "enviada por el empleador por medio del Sistema SEPP es " +
-            //        "una planilla declarada y presentada, misma que estará bajo el estado de " +
-            //        "Declaración y No Pago (DNP) mientras no reciba un depósito bancario.",
-            //        Celda='A'
-               
-            //    },
-            //        new Content(){
-            //        Conten="Señor Empleador: Después de recibida esta notificación " +
-            //        "contará con un plazo máximo de 10 días hábiles para brindar una respuesta, caso contrario " +
-            //        "se entenderá que todas las planillas declaradas quedan vigentes y pasará a generarse la deuda " +
-            //        "de acuerdo a lo indicado en el Art. 19-A de la Ley SAP.",
-            //        Celda='A'
+            //deuda
+
+
+            int c = 0;
+            //IExcel excel = new Excel();
+            //for (int s=1;s<=5;s++) {
+             
+            //    for (int a = 1; a <= 5; a++)
+            //    {
+            //        c++;
+            //        Console.WriteLine(c);
+            //        excel.NewContent(lista, $"hoja {c}");
+            //        c++;
+            //        Console.WriteLine(c);
+            //        excel.NewContent(lista2, $"Hoja {c}");
+            //        Console.WriteLine(c);
             //    }
-            //};
+            //    var resp = excel.Guardar($"Planilla ").Result;
 
-            //List<Content> cod = new List<Content>() {
-            //    new Content(){
-            //        Conten="Código de justificación.",
-            //        Celda='A'
-            //    },
-            //      new Content(){
-            //        Conten="01 - Planilla Duplicada.",
-            //        Celda='A'
-            //    },
-            //                        new Content(){
-            //        Conten="02 - Planilla con Error.",
-            //        Celda='A'
-            //    },
-            //          new Content(){
-            //        Conten="03 - Planilla Complementaria.",
-            //        Celda='A'
-            //    },
-            //          new Content(){
-            //        Conten="04 - Planilla Pagada.",
-            //        Celda='A'
-            //    },
-            //};
+            //    if (resp.FileName != null)
+            //        Console.WriteLine(resp.FileName);
+            //}
 
-            Console.WriteLine("Hello World!");
-            IExcel excel = new Excel("convdeuda");
-            excel.GuardarArchivo(null, "SEPP_DNP_08072020");
-            excel.NewContent(lista);
-              Console.WriteLine(excel.Ubicacion());
-              Console.ReadLine();
-             //lista.Clear();
-            excel.Delete();
+            IExcel excel = new Excel("deuda");
+            for (int s = 1; s <= 5; s++)
+            {
+                for (int a = 1; a <= 2; a++)
+                {
+                    c++;
+                    Console.WriteLine(c);
+                    excel.NewContent(lista2, $"hoja {c}");
+                    c++;
+                    Console.WriteLine(c);
+                    excel.NewContent(lista2, $"Hoja {c}");
+                    Console.WriteLine(c);
+                }
+                var resp = excel.Guardar($"Deuda").Result;
+
+                if (resp.FileName != null)
+                    Console.WriteLine(resp.FileName);
+            }
+
+
+            Console.ReadLine();
+
         }
+
+
     }
 }

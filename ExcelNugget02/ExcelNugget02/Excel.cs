@@ -21,32 +21,6 @@ namespace ExcelNugget02
 {
     public class Excel : IExcel
     {
-        #region constructor
-        public Excel()
-        {
-            celdaInicio = 'A';
-            positionInicion = 2;
-            _retryCount = 4;
-            _count = 0;
-            _resp = false;
-        }
-        #region PROCESO GENERAR DEUDA
-        public Excel(string proceso)
-        {
-            if (proceso.Equals("convdeuda"))
-            {
-                _proceso = proceso;
-                celdaInicio = 'A';
-                positionInicion = 1;
-                _retryCount = 4;
-                _count = 0;
-                _resp = false;
-            }
-
-        }
-        #endregion
-        #endregion
-
         #region Atributos
         private readonly string _proceso = null;
         private ExtraerContent extra = new ExtraerContent();
@@ -60,13 +34,32 @@ namespace ExcelNugget02
         private string[] dataconte = null;
         private ExcelWorksheet worksheet;
         private ExcelPackage excel = new ExcelPackage();
-        private string nombre_archivo = "";
         private string UbicacionDoc;
-        private static int _retryCount;
-        private static int _count;
-        private static bool _resp;
-        private Fecha _fecha = new Fecha();
+        private readonly Fecha _fecha = new Fecha();
+        private readonly string _ubicacion = null;
         private static readonly ILog _log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+        private readonly FileBase64 _fileBase64 = new FileBase64();
+        #endregion
+
+        #region constructor
+        public Excel()
+        {
+            celdaInicio = 'A';
+            positionInicion = 2;
+        }
+
+        #region PROCESO GENERAR DEUDA
+        public Excel(string proceso)
+        {
+            if (proceso.Equals("deuda"))
+            {
+                _proceso = proceso;
+                celdaInicio = 'A';
+                positionInicion = 1;
+            }
+
+        }
+        #endregion
         #endregion
 
         #region CELDA FINAL Y ENCABEZADO
@@ -82,7 +75,7 @@ namespace ExcelNugget02
                 ColorTexto($"A1", Color.WhiteSmoke, Color.Black, 12);
             }
 
-            Dispos(true);
+            Dispose(true);
         }
         #endregion
 
@@ -91,18 +84,16 @@ namespace ExcelNugget02
         #region GENERA EXCEL
         public Task<bool> NewContent<T>(List<T> datos, string hoja)
         {
-            _resp = false;
-            _count = 0;
+            bool _resp = false;
             try
             {
                 var policyExcel = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
-                   WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                   WaitAndRetry(4, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
                    {
-                       _count++;
-                       _log.Warn($"Intenton {_count} Para crear el excel {_fecha.FechaNow().Result}");
+                       _log.Warn($"Intent Para crear el excel {time.Seconds}, {_fecha.FechaNow().Result}");
                    });
 
-                policyExcel.Execute(()=> {
+                policyExcel.Execute(() => {
                     if (datos.Count > 0)
                     {
                         var cantidad = extra.GetHeader(datos.FirstOrDefault());
@@ -135,22 +126,19 @@ namespace ExcelNugget02
                             }
                             data.Add(dataconte);
                         }
-                         bool resp= Header(hoja).Result;
-                         if(resp)
-                           resp= Content().Result;
-
-                        Limpiar();
+                        bool resp = Header(hoja).Result;
+                        if (resp)
+                            resp = Content().Result;
                         _log.Info($"Archivo excel creado con exito {_fecha.FechaNow().Result}");
                     }
-                    Dispos(true);
                 });
             }
             catch (Exception ex)
             {
-                _log.Fatal($"Se ejecutaron  {_count} intentos para  la creacion del excel {_fecha.FechaNow().Result}");
-               _log.Error($"Exce {ex.StackTrace}");
-                _count = 0;
+                _log.Error($"Excel {ex.StackTrace}");
             }
+            Limpiar();
+            Dispose(true);
             return Task.FromResult(_resp);
         }
         #endregion
@@ -158,15 +146,14 @@ namespace ExcelNugget02
         #region CONTENIDO
         private Task<bool> Content()
         {
-            _resp = false;
-            _count = 0;
+            bool _resp = false;
+
             try
             {
                 var policyConten = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
-                    WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                    WaitAndRetry(4, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
                     {
-                        _count++;
-                        _log.Fatal($"Intento {_count} para crear el contenido del excel {_fecha.FechaNow().Result}");
+                        _log.Fatal($"Intento para crear el contenido del excel, {time.Seconds} {_fecha.FechaNow().Result}");
                     });
 
                 policyConten.Execute(() =>
@@ -182,12 +169,8 @@ namespace ExcelNugget02
             }
             catch (Exception ex)
             {
-                _log.Fatal($"Se ejecutaron {_count} intentos  para generar el contenido {_fecha.FechaNow().Result}");
-                _count = 0;
-              _log.Warn($"Excepcion {ex.StackTrace}");
-            
+                _log.Warn($"Excepcion {ex.StackTrace}");
             }
-            Dispos(true);
             return Task.FromResult(_resp);
         }
         #endregion
@@ -195,17 +178,15 @@ namespace ExcelNugget02
         #region HEADER
         private Task<bool> Header(string nombrehoja)
         {
-            _resp = false;
-            _count = 0;
+            bool _resp = false;
             try
             {
                 var policyHeader = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
-                    WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (excel, time) => {
-                        _count++;
-                        _log.Warn($"Intento {_count} para crear el Header {_fecha.FechaNow().Result}");
+                    WaitAndRetry(4, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (excel, time) => {
+                        _log.Warn($"Intento para crear el Header, {time.Seconds}  {_fecha.FechaNow().Result}");
                     });
 
-                policyHeader.Execute(()=> {
+                policyHeader.Execute(() => {
                     excel.Workbook.Worksheets.Add(nombrehoja);
                     string range = Convertir32(headerRow);
                     worksheet = excel.Workbook.Worksheets[nombrehoja];
@@ -222,12 +203,9 @@ namespace ExcelNugget02
             }
             catch (Exception ex)
             {
-                _log.Warn($"se ejecutaron  {_count} intentos  Para crear los Header {_fecha.FechaNow().Result}");
                 _log.Error($"Excepcion {ex.StackTrace}");
-                _count = 0;
             }
-            Dispose();
-            return  Task.FromResult(_resp);
+            return Task.FromResult(_resp);
         }
         #endregion
 
@@ -235,110 +213,71 @@ namespace ExcelNugget02
 
         #region RUTA ARCHIVO
         #region CREAR DIRECTORIO
-        public Task<bool> ArchivoRuta(string ubicacion, string nombre_archivo)
+        private void Directorio()
         {
-            _resp = false;
-            _count = 0;
             try
             {
                 var policyDirectorio = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
-                    WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                    WaitAndRetry(4, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
                     {
-                        _count++;
-                        _log.Warn($"Intento {_count} para crear el directorio {_fecha.FechaNow().Result}");
+                        _log.Warn($"Intento para crear el directorio,{time.Seconds} !!  {_fecha.FechaNow().Result}");
                     });
 
-                policyDirectorio.Execute(()=> {
-                    this.nombre_archivo = nombre_archivo;
-                    if (string.IsNullOrEmpty(ubicacion))
+                policyDirectorio.Execute(() => {
+                    if (string.IsNullOrEmpty(_ubicacion))
                         this.UbicacionDoc = Directory.GetCurrentDirectory();
                     else
-                        this.UbicacionDoc = ubicacion;
+                        this.UbicacionDoc = _ubicacion;
                     _log.Info($"Directorio creado con exito {_fecha.FechaNow().Result}");
-                    _resp = true;
                 });
             }
             catch (Exception ex)
             {
-                _log.Fatal($"Se ejecutaron {_count} intentos para ejecutar la creacion del directoio {_fecha.FechaNow().Result}");
                 _log.Error($"Exception {ex.StackTrace}");
-                _count = 0;
             }
-            Dispos(true);
-            return Task.FromResult(_resp);
         }
         #endregion
 
         #region Guardar el archivo
-        public Task<string> Guardar()
+        public Task<FileBase64> Guardar(string FileName)
         {
-            string RutaUbicacion = null;
-            _count = 0;
+            FileBase64 _fileBase64 = new FileBase64();
             try
             {
-                var policySave=RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
-                       WaitAndRetry(_retryCount, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
+                var policySave = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
+                       WaitAndRetry(4, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), (ex, time) =>
                        {
-                           _count++;
-                           _log.Warn($"Intenton {_count} Para guardar el archivo excel {_fecha.FechaNow().Result}");
+                           _log.Warn($"Intenton  Para guardar el archivo excel {time.Seconds}, {_fecha.FechaNow().Result}");
                        });
 
-                policySave.Execute(()=> {
-                    var execel = $@"{UbicacionDoc}/Excel/{nombre_archivo}.xlsx";
-                    FileInfo excelFile = new FileInfo(execel);
+                policySave.Execute(() => {
+                    Directorio();
+                    var excelUbicacion = $@"{UbicacionDoc}/Excel/{FileName}.xlsx";
+
+
+                    FileInfo excelFile = new FileInfo(excelUbicacion);
                     excelFile.Directory.Create();
-                    UbicacionDoc = excelFile.ToString();
                     excel.SaveAs(excelFile);
-                    Dispos(true);
-                    RutaUbicacion = UbicacionDoc;
                     _log.Info($"Archivo guardado con exito {_fecha.FechaNow().Result}");
-                });
-            }
-            catch (Exception ex)
-            {
-                _log.Warn($"Intentos {_count} para poder guardar el archivo excel {_fecha.FechaNow().Result}");
-                _log.Warn($"Exception {ex.StackTrace}" );
-           
-            }
-            return Task.FromResult(RutaUbicacion);
-        }
-        #endregion
-
-        #region ELIMINAR 
-        public Task<bool> Delete()
-        {
-            _resp = false;
-            _count = 0;
-            try
-            {
-                var policyDelete = RetryPolicy.Handle<Exception>().Or<NullReferenceException>().
-                    WaitAndRetry(_retryCount, retryAttempt=>TimeSpan.FromSeconds(Math.Pow(2,retryAttempt)),(ex,time)=> {
-                        _count++;
-                        _log.Fatal($"Intento {_count} para eliminar el archivo excel {_fecha.FechaNow().Result}");      
-                    });
-
-                policyDelete.Execute(()=> {
-
-                    if (File.Exists(UbicacionDoc.ToString()))
+                    _fileBase64 = new FileBase64()
                     {
-                        File.Delete(UbicacionDoc.ToString());
-                        _resp = true;
-                    }
-                    else 
-                        Process.Start(UbicacionDoc.ToString());
+                        FileName = Path.GetFileName(excelUbicacion),
+                        Base64Data = Convert.ToBase64String(File.ReadAllBytes(excelUbicacion))
+                    };
+                    _log.Info($"Proceso de conversion Base64 {_fecha.FechaNow().Result}");
+                    // File.Delete(excelUbicacion);
+                    // _log.Info($"Archivo elminado con exito {_fecha.FechaNow().Result}");
+
                 });
             }
             catch (Exception ex)
             {
-                _log.Warn($"Se ejecutaron {_count} intentos para eliminar el archivo excel !!! {_fecha.FechaNow().Result}");
-                _count = 0;
-                _log.Warn($"Excepcion {ex.StackTrace}");
+                _log.Warn($"Exception {ex.StackTrace}");
             }
-            Dispos(true);
-            return Task.FromResult(_resp);
+            Dispose(true);
+            return Task.FromResult(_fileBase64);
         }
         #endregion
-
         #endregion
 
         #region CONVERT 32
@@ -358,7 +297,7 @@ namespace ExcelNugget02
                 position++;
             }
             position = 0;
-            Dispos(true);
+            Dispose(true);
             return positionInicion;
         }
         private void ColorCelda(string celda, Color color)
@@ -511,14 +450,14 @@ namespace ExcelNugget02
                 properties = null;
                 me.Dispose();
             }
-            Dispos(true);
+            Dispose(true);
         }
-        public void Dispos(bool reps)
+
+        public void Dispose(bool reps)
         {
             if (reps)
             {
-                GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
-                GC.Collect(2,GCCollectionMode.Forced);
+                Dispose();
             }
         }
         public void Dispose()

@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExcelFormat" Version="1.1.24" />
+    <PackageReference Include="ExcelFormat" Version="1.1.25" />
   </ItemGroup>
 
 </Project>
