@@ -160,6 +160,7 @@ namespace ExcelNugget02
                 {
                     string range = Convertir32(data);
                     worksheet.Cells[range].LoadFromArrays(data);
+                    worksheet.Cells.AutoFitColumns();
                     GenerarCeldaFinal();
                     if (_proceso == null)
                         GenerarBorder();
@@ -346,7 +347,8 @@ namespace ExcelNugget02
                 switch (opcion)
                 {
                     case 1:
-                        worksheet.Cells[celda].AutoFitColumns();
+                      //  worksheet.Cells[celda];
+                    
                         break;
                 }
             }
@@ -366,6 +368,7 @@ namespace ExcelNugget02
                 worksheet.Cells[celda].Style.Fill.PatternType = ExcelFillStyle.Solid;
                 worksheet.Cells[celda].Style.Fill.BackgroundColor.SetColor(fondo);
                 worksheet.Cells[celda].Style.Font.Color.SetColor(colorTexto);
+
             }
             catch (Exception ex)
             {
@@ -426,6 +429,7 @@ namespace ExcelNugget02
             try
             {
                 worksheet.Cells[celda].LoadFromArrays(datos);
+                worksheet.Cells[celda].AutoFitColumns(0.00,75.00);
                 _log.Info("Cargo la Data con exito..");
             }
             catch (Exception ex)

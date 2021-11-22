@@ -83,7 +83,7 @@ namespace PrueebasNugguet2
             //}
 
             IExcel excel = new Excel("deuda");
-            for (int s = 1; s <= 5; s++)
+            for (int s = 1; s <= 2; s++)
             {
                 for (int a = 1; a <= 2; a++)
                 {

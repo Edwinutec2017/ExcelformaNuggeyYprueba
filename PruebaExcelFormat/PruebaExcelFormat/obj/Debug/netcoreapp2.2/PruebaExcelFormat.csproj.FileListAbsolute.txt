@@ -20,3 +20,16 @@ E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\ne
 E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.dll
 E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.pdb
 E:\Repo\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.csprojAssemblyReference.cache
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.deps.json
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.runtimeconfig.json
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.runtimeconfig.dev.json
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.dll
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\bin\Debug\netcoreapp2.2\PruebaExcelFormat.pdb
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.csproj.AssemblyReference.cache
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.AssemblyInfoInputs.cache
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.AssemblyInfo.cs
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.csproj.CoreCompileInputs.cache
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.dll
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.pdb
+D:\Repo-git\ExcelformaNuggeyYprueba\PruebaExcelFormat\PruebaExcelFormat\obj\Debug\netcoreapp2.2\PruebaExcelFormat.genruntimeconfig.cache

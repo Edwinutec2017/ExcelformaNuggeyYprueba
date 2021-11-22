@@ -19,7 +19,7 @@ using System.Threading.Tasks;
 
 namespace ExcelNugget02
 {
-    public class Excel : IExcel
+    public class Excel 
     {
         #region Atributos
         private readonly string _proceso = null;

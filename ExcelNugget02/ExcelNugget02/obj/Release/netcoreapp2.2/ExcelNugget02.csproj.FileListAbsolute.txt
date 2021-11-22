@@ -19,3 +19,14 @@ E:\Repo\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcorea
 E:\Repo\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.AssemblyInfo.cs
 E:\Repo\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.dll
 E:\Repo\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.pdb
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\Interfaces\IExcel.cs
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\ExcelNugget02.deps.json
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\ExcelNugget02.dll
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\bin\Release\netcoreapp2.2\ExcelNugget02.pdb
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.csproj.AssemblyReference.cache
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.GeneratedMSBuildEditorConfig.editorconfig
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.AssemblyInfoInputs.cache
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.AssemblyInfo.cs
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.csproj.CoreCompileInputs.cache
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.dll
+D:\Repo-git\ExcelformaNuggeyYprueba\ExcelNugget02\ExcelNugget02\obj\Release\netcoreapp2.2\ExcelNugget02.pdb
