@@ -162,6 +162,7 @@ namespace ExcelNugget02
                     worksheet.Cells[range].LoadFromArrays(data);
                     worksheet.Cells.AutoFitColumns();
                     GenerarCeldaFinal();
+                    /*quitar para bordes */
                     if (_proceso == null)
                         GenerarBorder();
                     positionInicion--;
